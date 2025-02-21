@@ -19,7 +19,7 @@ export default function CatagoryMenu() {
                    
         </button>})}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 p-6 items-start">
+        <div>
         <FoodItems/>
         </div>
     </div>

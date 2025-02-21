@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 function FoodCard({food}) {
+
   return (
     <div className='flex flex-col w-80 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 min-h-[350px]'>
        <div>{
