@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../Redux/CartSlice'
 
 function FoodCard({food}) {
+const dispatch = useDispatch();
 
   return (
     <div className='flex flex-col w-80 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 min-h-[350px]'>
@@ -30,7 +33,7 @@ function FoodCard({food}) {
        </div>
        <div className="flex items-center justify-between gap-2 mt-2 px-4 pb-4">
           <span className="text-gray-700 font-medium">₹{food.price} for one</span>
-          <button className='bg-red-500 p-2 rounded-lg font-bold hover:bg-red-600 text-sm'> Add to Cart</button>
+          <button className='bg-red-500 p-2 rounded-lg font-bold hover:bg-red-600 text-sm' onClick={()=>(dispatch(addToCart(food)))}> Add to Cart</button>
           
         </div>
     </div>
