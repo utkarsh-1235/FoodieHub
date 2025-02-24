@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const localStorageGetItem = ()=>{
     try{
         const savedCart = localStorage.getItem('cart');
-        console.log("Your saved cart", savedCart);
         return savedCart ? JSON.parse(savedCart) : [];
     }catch(err){
         console.error("Error in loading the cart",err);
+        return [];
     }
 }
 

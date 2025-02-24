@@ -10,7 +10,7 @@ const {register} = useFormContext();
 
 return <><input {...register('name',{required: true})}className='w-[70%] border rounded-md p-2 text-center' placeholder='Enter Your Name'  name='name'/>
           <input {...register('email',{required: true})} className='w-[70%] border rounded-md p-2 text-center' placeholder='Enter Your Email'  name='email'/>
-          <input {...register('password',{required: true})} className='w-[70%] border rounded-md p-2 text-center' placeholder='Enter Your Password'  name='password'/></>
+          <input {...register('password',{required: true})} className='w-[70%] border rounded-md p-2 text-center' placeholder='Create Your Password'  name='password'/></>
 }
 function SignUp() {
     const navigate = useNavigate();

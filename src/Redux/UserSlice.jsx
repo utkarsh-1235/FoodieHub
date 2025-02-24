@@ -21,7 +21,7 @@ const UserSlice = createSlice({
     reducers:{
         AddUser : (state, action)=>{
             console.log("Login Action Triggered:", action.payload); // Debugging
-            state.user.push(action.payload);
+            state.user = action.payload;
             localStorage.setItem('user',JSON.stringify(action.payload));
             localStorage.setItem('isAuthenticated',JSON.stringify(true));
         },
