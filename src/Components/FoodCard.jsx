@@ -35,8 +35,8 @@ const dispatch = useDispatch();
           <span className="text-gray-700 font-medium">₹{price} for one</span>
           <button className='bg-red-500 p-2 rounded-lg font-bold hover:bg-red-600 text-sm' 
                   onClick={()=>{
-                    dispatch(addToCart({ ...food,qty:1}));
-                   if(food.name) handleToast(name)
+                    dispatch(addToCart({ id, img, name, price, desc, category, rating,qty:1}));
+                   if(name) handleToast(name)
                     }}> Add to Cart</button>
           
         </div>
