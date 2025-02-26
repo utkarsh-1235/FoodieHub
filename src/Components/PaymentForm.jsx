@@ -1,6 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
 import React, { useState } from 'react'
 
+
 const paymentMethods = [
     { id: "upi", name: "UPI", description: "Pay using UPI ID or linked app" },
     { id: "wallet", name: "Wallet", description: "Pay using Paytm, Amazon Pay, etc." },
@@ -36,7 +37,7 @@ export default function PaymentForm() {
             {paymentMethods && paymentMethods.map((paymentMethod)=>(
                 <RadioGroup.Option key={paymentMethod.id} value={paymentMethod.id}>
                     {({checked})=>(
-                        <div className={`p-3 rounded-lg cursor-pointer transition ${checked ? 'bg-red-400':'bg-gray-200 hover:bg-gray-300'}`}>
+                        <div className={`p-3 m-2 rounded-lg cursor-pointer transition ${checked ? 'bg-red-400':'bg-gray-200 hover:bg-gray-300'}`}>
                             <p className="font-medium text-black">{paymentMethod.name}</p>
                             <p className="text-sm">{paymentMethod.description}</p>
                             {
