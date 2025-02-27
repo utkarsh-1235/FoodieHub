@@ -24,11 +24,11 @@ function AddressComponent() {
     }
   return (
     <>
-    <div className='p-6 mb-6 bg-white rounded-lg shadow-lg max-w-md mx-auto'>
+    <div className='p-6 mb-6 bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
        <h2 className='text-xl text-center font-semibold'> Address Details </h2>
-       <div>
+       <div className='text-center p-4'>
        <input
-                                            className='w-[90%] ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'state'
                                              placeholder = 'State'
@@ -36,14 +36,14 @@ function AddressComponent() {
                                              onChange = {handleInput}/>
 
 <input
-                                            className='w-[90%] ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'dist'
                                              placeholder = 'District'
                                              value = {address.dist}
                                              onChange = {handleInput}/>  
                                              <input
-                                            className='w-[90%] ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'pin'
                                              placeholder = 'Pin Code'
@@ -51,7 +51,7 @@ function AddressComponent() {
                                              onChange = {handleInput}/>
 
                                             <input
-                                            className='w-[90%] ml-4 mb-3 p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-[80%] text-center ml-4 mb-3 p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'city'
                                              placeholder = 'City'
@@ -59,7 +59,7 @@ function AddressComponent() {
                                              onChange = {handleInput}/>
 
                                              <input
-                                            className='w-[90%] ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'address'
                                              placeholder = 'Flat Number'
@@ -67,8 +67,8 @@ function AddressComponent() {
                                              onChange = {handleInput}/>
           
                                            
+       <button className='mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition' onClick={SubmitAddress}>Proceed </button>
        </div>
-       <button className='mt-6 w-full p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition' onClick={SubmitAddress}>Proceed </button>
     </div>
     </>
   )

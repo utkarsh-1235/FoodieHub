@@ -31,13 +31,14 @@ export default function PaymentForm() {
     
   return (
     <>
-    <div className='p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto'>
+    <div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
         <h2 className='text-center text-xl font-semibold mb-4'> Select Payment Method</h2> 
-        <RadioGroup value={method} onChange={setMethod}>
+        <div className='ml-10'>
+        <RadioGroup  value={method} onChange={setMethod}>
             {paymentMethods && paymentMethods.map((paymentMethod)=>(
                 <RadioGroup.Option key={paymentMethod.id} value={paymentMethod.id}>
                     {({checked})=>(
-                        <div className={`p-3 m-2 rounded-lg cursor-pointer transition ${checked ? 'bg-red-400':'bg-gray-200 hover:bg-gray-300'}`}>
+                        <div className={`p-3  m-2 w-[80%] text-center rounded-lg cursor-pointer transition ${checked ? 'bg-red-400':'bg-gray-200 hover:bg-gray-300'}`}>
                             <p className="font-medium text-black">{paymentMethod.name}</p>
                             <p className="text-sm">{paymentMethod.description}</p>
                             {
@@ -45,7 +46,7 @@ export default function PaymentForm() {
                                     <div className='mt-2 p-3 bg-gray-100 rounded-lg space-y-2'>
                                         {
                                             paymentMethod.id === 'upi' && <input
-                                            className='w-full p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-full  text-center p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'upiId'
                                              placeholder = 'Enter UPI ID'
@@ -54,7 +55,7 @@ export default function PaymentForm() {
                                         }
                                          {
                                             paymentMethod.id === 'card' && <div className='space-y-2'><input
-                                            className='w-full p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-full text-center p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'cardNumber'
                                              placeholder = 'Card Number'
@@ -62,7 +63,7 @@ export default function PaymentForm() {
                                              onChange = {handleInput}/>
                                         
                                              <input
-                                            className='w-1/2 p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-full text-center p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'expiryDate'
                                              placeholder = 'MM/YY'
@@ -70,7 +71,7 @@ export default function PaymentForm() {
                                              onChange = {handleInput}/>
                                         
                                              <input
-                                            className='w-1/2 p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                            className='w-full text-center p-1 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
                                              name = 'cvv'
                                              placeholder = 'CVV'
@@ -88,7 +89,8 @@ export default function PaymentForm() {
                 </RadioGroup.Option>))}
 
         </RadioGroup>
-        <button className="mt-6 w-full p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" onClick={handlePayment}>
+        </div>
+        <button className="mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" onClick={handlePayment}>
         Proceed to Pay
       </button>
     </div>

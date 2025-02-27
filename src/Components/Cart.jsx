@@ -16,11 +16,12 @@ function Cart() {
 
     const navigate = useNavigate();
     const handleCheckout = ()=>{
-      const checkOut = {
-         Price: totalPrice,
-         items: totalItems
-      }
-       navigate('/payment',{state: checkOut})
+   //    const checkOut = new URLSearchParams({
+   //       price: totalPrice.toString(),
+   //       items: totalItems.toString()
+   //    })
+   // //   navigate(`/payment?${checkOut.toString()}`,{state: checkOut});
+   navigate(`/payment?price=${totalPrice}&items=${totalItems}`)
     }
     
     
