@@ -33,7 +33,10 @@ function LoginPage() {
         if(!emailRegex.test(data.email)){
             toast.error("please Enter valid email");
         }else{
-            const userData = {id: 1, user: data}
+            const userData = {
+                email: data.email,
+                password: data.password                            
+            }
             dispatch(login(userData));
             navigate('/')
             

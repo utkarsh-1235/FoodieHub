@@ -30,7 +30,8 @@ function SignUp() {
             toast.error('Please Enter valid email')
         }
         else{
-            dispatch(AddUser({id: 1, user: data}))
+            const userData = {name: data.name, email: data.email, password: data.password}
+            dispatch(AddUser(userData));
             navigate('/')
         }
     }
@@ -54,6 +55,6 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default SignUp;
 
  

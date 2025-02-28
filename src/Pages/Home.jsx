@@ -1,12 +1,22 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Caraousel from '../Components/Caraousel';
+import { useSelector } from 'react-redux';
 // import Caraousel from '../Components/Caraousel';
+import { logout } from '../Redux/UserSlice';
+import { useDispatch } from 'react-redux';
 
 function Home() {
     const navigate = useNavigate();
+    const userAuthentication = useSelector((state)=>state.User.isAuthenticated);
+    const token = useSelector((state)=>state.User.token);
+    const dispatch = useDispatch();
+
     const onclick = ()=>{
         navigate("/login")
+    }
+    const onlogout = ()=>{
+        dispatch(logout());
     }
     const onmove = ()=>{
         navigate("/about")
@@ -15,7 +25,13 @@ function Home() {
         navigate("/signup")
     }
     const foodClick = ()=>{
+      console.log(userAuthentication)
+      if(userAuthentication === true){
         navigate("/food")
+      }else{
+
+        navigate("/login")
+      }
     }
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-200 to-red-800 text-white">
@@ -27,8 +43,16 @@ function Home() {
           <li className="hover:text-blue-500 cursor-pointer p-2" onClick={onmove}>About</li>
           <li className="hover:text-blue-500 cursor-pointer p-2">Services</li>
           <li className="hover:text-blue-500 cursor-pointer p-2">Contact</li>
-          <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onclick}>Login</li>
-          <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onsignup}>SignUp</li>
+          {
+            userAuthentication === true && token ?(
+              <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onlogout}>Logout</li>
+            ):
+            (
+            <>  <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onclick}>Login</li>
+              <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onsignup}>SignUp</li></>
+            )
+          }
+          
           
         </ul>
       </nav>
