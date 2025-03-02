@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Caraousel from '../Components/Caraousel';
 import { useSelector } from 'react-redux';
 // import Caraousel from '../Components/Caraousel';
 import { logout } from '../Redux/UserSlice';
 import { useDispatch } from 'react-redux';
+import { deletCart } from '../Redux/CartSlice';
 
 function Home() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ function Home() {
     }
     const onlogout = ()=>{
         dispatch(logout());
+        dispatch(deletCart());
     }
     const onmove = ()=>{
         navigate("/about")
@@ -26,13 +28,18 @@ function Home() {
     }
     const foodClick = ()=>{
       console.log(userAuthentication)
-      if(userAuthentication === true){
+      if(userAuthentication){
         navigate("/food")
       }else{
 
         navigate("/login")
       }
     }
+
+    // useEffect(()=>{
+    //   console.log("token",token);
+    //   console.log("User Authentication",userAuthentication);
+    // },[])
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-200 to-red-800 text-white">
       {/* Navbar */}
@@ -44,7 +51,7 @@ function Home() {
           <li className="hover:text-blue-500 cursor-pointer p-2">Services</li>
           <li className="hover:text-blue-500 cursor-pointer p-2">Contact</li>
           {
-            userAuthentication === true && token ?(
+            userAuthentication && token ? (
               <li className="bg-red-300 rounded-md p-2 text-black cursor-pointer hover:bg-red-400 cursor-pointer" onClick={onlogout}>Logout</li>
             ):
             (

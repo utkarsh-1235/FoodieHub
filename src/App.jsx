@@ -8,6 +8,7 @@ import About from './Pages/About'
 import CatagoryMenu from './Components/CatagoryMenu'
 import { useSelector } from 'react-redux'
 import PaymentPage from './Pages/PaymentPage'
+import RestaurantList from './Components/RestaurantList'
 
 function App() {
   const isAuthenticated = useSelector((state)=>state.isAuthenticated)
@@ -20,6 +21,7 @@ function App() {
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/payment' element={<PaymentPage/>}/>
       <Route path='/food' element={<CatagoryMenu/>}/>
+      <Route path='/restaurant' element={<RestaurantList/>}/>
       
       </Routes>
       </BrowserRouter>

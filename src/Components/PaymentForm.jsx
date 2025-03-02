@@ -18,7 +18,7 @@ export default function PaymentForm() {
         cvv:''
     })
     const [method, setMethod] = useState(paymentMethods[0].id);
-  console.log(method)
+  
     const handleInput = (e)=>{
         const {name, value} = e.target;
         setPayment((prev)=>({...prev, [name]:value}));

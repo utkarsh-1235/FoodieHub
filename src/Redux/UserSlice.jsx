@@ -42,8 +42,8 @@ const UserSlice = createSlice({
         currentUser: null,
         error: null,
         loading: null,
-        isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
-        token: null
+        isAuthenticated: localStorage.getItem('isAuthenticated'),
+        token: localStorage.getItem('token')
     },
     reducers:{
     
@@ -55,8 +55,10 @@ const UserSlice = createSlice({
         logout : (state, action)=>{
             state.user = null;
             state.isAuthenticated = false;
+            state.token = null;
             localStorage.removeItem('user');
-            localStorage.removeItem('isAuthenticated')
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('token');
         }
 
     },
@@ -77,8 +79,10 @@ const UserSlice = createSlice({
                  state.loading = false; 
                  state.error = false;
 
-                 localStorage.setItem('user', JSON.stringify(action.payload));
-                localStorage.setItem('isAuthenticated', 'true');
+                 localStorage.setItem('user', JSON.stringify(state.user));
+                 localStorage.setItem('isAuthenticated', 'true');
+                 localStorage.setItem('token',JSON.stringify(state.token));
+                 
                  
               })
               .addCase(login.rejected,(state,action)=>{
@@ -98,6 +102,8 @@ const UserSlice = createSlice({
 
                 localStorage.setItem('user', JSON.stringify(action.payload));
                 localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('token',state.token);
+
               })
               
     }

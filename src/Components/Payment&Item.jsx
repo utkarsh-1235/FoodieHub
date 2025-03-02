@@ -6,7 +6,7 @@ function PaymentItems() {
 
     const price = searchParams.get('price');
     const items = searchParams.get('items');
-    console.log({price, items});
+    
   return (
     <>
     <div className='p-6 text-left bg-gray-100 rounded-lg shadow-lg max-w-3xl h-[70%]'>

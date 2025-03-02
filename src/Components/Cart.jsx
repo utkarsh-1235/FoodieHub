@@ -1,26 +1,36 @@
 import React, { use, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import ItemCart from './ItemCart'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { CreateCart } from '../Redux/CartSlice';
 
 function Cart() {
 
     const CartItems = useSelector((state)=> state.Cart.cart);
     const [activeState, setActiveState] = useState(false);
+    const dispatch = useDispatch();
 
     const totalItems = CartItems.reduce((total,item)=> total + item.qty ,0)
 
     const totalPrice = CartItems.reduce((total, item)=> total + item.qty * item.price,0)
+    const user = useSelector((state)=> state.User.user);
 
     const navigate = useNavigate();
     const handleCheckout = ()=>{
-   //    const checkOut = new URLSearchParams({
-   //       price: totalPrice.toString(),
-   //       items: totalItems.toString()
-   //    })
-   // //   navigate(`/payment?${checkOut.toString()}`,{state: checkOut});
+     const cartData = {
+      userId: user.user._id,
+       items: CartItems.map((item)=>({
+         dishId: item.id,
+         qty: item.qty
+       })), 
+       totalPrice, 
+       totalItems
+     }
+
+
+   dispatch(CreateCart({cartData}));
    navigate(`/payment?price=${totalPrice}&items=${totalItems}`)
     }
     
