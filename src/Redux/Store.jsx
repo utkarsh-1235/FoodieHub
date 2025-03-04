@@ -5,6 +5,7 @@ import CategorySlice from './CategorySlice'
 import SearchSlice from "./SearchSlice"
 import PaymentSlice from './PaymentSlice'
 import AddressSlice from './AddressSlice'
+import RestaurantSlice from './RestaurantSlice'
 
 const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
         Category: CategorySlice,
         Search: SearchSlice,
         Payment: PaymentSlice,
-        Address: AddressSlice
+        Address: AddressSlice,
+        Restaurant: RestaurantSlice
     }
 })
 

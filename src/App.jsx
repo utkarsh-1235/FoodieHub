@@ -9,9 +9,9 @@ import CatagoryMenu from './Components/CatagoryMenu'
 import { useSelector } from 'react-redux'
 import PaymentPage from './Pages/PaymentPage'
 import RestaurantList from './Components/RestaurantList'
+import AddRestaurant from './Components/AddRestaurant'
 
 function App() {
-  const isAuthenticated = useSelector((state)=>state.isAuthenticated)
   return (
     <BrowserRouter>
     <Routes>
@@ -22,6 +22,7 @@ function App() {
       <Route path='/payment' element={<PaymentPage/>}/>
       <Route path='/food' element={<CatagoryMenu/>}/>
       <Route path='/restaurant' element={<RestaurantList/>}/>
+      <Route path='/add' element={<AddRestaurant/>}/>
       
       </Routes>
       </BrowserRouter>
