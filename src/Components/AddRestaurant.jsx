@@ -1,28 +1,44 @@
 import React, { useState } from "react";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addRestaurant } from "../Redux/RestaurantSlice";
+import imageCompression from "browser-image-compression";
 
 function InputComponent() {
   const { register,setValue, watch } = useFormContext();
   const [preview, setPreview] = useState();
 
-  const handleFileChange = (e)=>{
+  const handleFileChange = async(e)=>{
    const file = e.target.files[0];
    if(file){
-    const imageUrl = URL.createObjectURL(file);
-    setValue('img',imageUrl);
-    setPreview(imageUrl);
+    const options = {maxSizeMB : 0.5, maxHeightOrWidth : 500, useWebWorker : true};
+    try{
+        const compressedFile = await imageCompression (file, options);
+        const reader = new FileReader();
+
+        
+        reader.readAsDataURL(compressedFile);
+        reader.onloadend = () => {
+          setValue("img", reader.result,{shouldValidate: true}); // Store Base64 image in form data
+          setPreview(reader.result); // Show preview
+        };
+    }
+    catch(err){
+        console.error("Image compression error:", err);
+    }
    }
   }
 
 
   return (
     <>
-      <input {...register("id", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Your ID" />
-      <input {...register("name", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Your Restaurant Name" />
-      <input {...register("rating", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Rating" type="number" />
-      <input {...register("cuisine", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Cuisine Type" />
+      <input {...register("id", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter ID" />
+      <input {...register("name", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Restaurant Name" />
+      <input {...register("email", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Your Email" type="email" />
+      <input {...register("address", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Restaurant Address" type="text" />
+      <input {...register("phoneNumber", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Phone Number" type="text" />
+      <textarea {...register("description", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Description"/>
+      <input {...register("cuisine", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Cuisine Type" type="text" />
        
       <input type="file" accept="image/*" className="border w-[70%] p-2 rounded-md text-center" onChange={handleFileChange} />
       <input type='hidden' {...register("img")}/>
@@ -34,10 +50,15 @@ function InputComponent() {
 function AddRestaurant() {
   const methods = useForm();
   const dispatch = useDispatch();
+  const user = useSelector((state)=>state.User.user)
 
   const onSubmit = (data) => {
     // console.log("Restaurant Data:", data);
-     dispatch(addRestaurant(data));
+    const restaurantData = {
+        userid: user.user._id,
+        restaurant: data
+    }
+     dispatch(addRestaurant(restaurantData));
   };
 
   return (
