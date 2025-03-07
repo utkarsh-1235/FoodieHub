@@ -32,7 +32,6 @@ function InputComponent() {
 
   return (
     <>
-      <input {...register("id", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter ID" />
       <input {...register("name", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Restaurant Name" />
       <input {...register("email", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Your Email" type="email" />
       <input {...register("address", { required: true })} className="border w-[70%] p-2 rounded-md text-center" placeholder="Enter Restaurant Address" type="text" />
@@ -50,12 +49,11 @@ function InputComponent() {
 function AddRestaurant() {
   const methods = useForm();
   const dispatch = useDispatch();
-  const user = useSelector((state)=>state.User.user)
+  // const user = useSelector((state)=>state.User.user)
 
   const onSubmit = (data) => {
     // console.log("Restaurant Data:", data);
     const restaurantData = {
-        userid: user.user._id,
         restaurant: data
     }
      dispatch(addRestaurant(restaurantData));

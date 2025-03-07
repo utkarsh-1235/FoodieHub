@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
-import Restaurants from '../Data/RestaurantsData';
+import React, { useEffect, useState } from 'react'
+ import Restaurants from '../Data/RestaurantsData';
 import RestaurantCart from './RestaurantCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRestaurants } from '../Redux/RestaurantSlice';
 
 
 function RestaurantList() {
     const [sort, setSort] = useState('rating');
     const [search, setSearch] = useState("")
+    const dispatch = useDispatch();
+    // const Restaurants = useSelector((state)=>state.Restaurant.restaurant || []);
+    const loading = useSelector((state)=>state.Restaurant.loading);
+    const error = useSelector((state)=>state.Restaurant.error)
 
+  //   useEffect(() => {
+  //     dispatch(getRestaurants());
+  //  }, [dispatch]);
+   
+  //  useEffect(() => {
+  //     console.log("Updated Restaurants:", Restaurants);
+  //  }, [Restaurants]);
+   
     const filterRestaurant = Restaurants.filter((ind)=> ind.name.toLowerCase().includes(search.toLowerCase()))
                                         .sort((a,b)=> sort === 'rating' ? b.rating - a.rating : a.deliveryTime - b.deliveryTime)
 
