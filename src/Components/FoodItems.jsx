@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Foods from '../Data/Data'
 import FoodCard from './FoodCard'
 import Cart from './Cart'
 import toast,{ Toaster } from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllDishes } from '../Redux/DIshSlice'
 
 
 
@@ -12,6 +13,12 @@ function FoodItems() {
 
     const selectedCategory = useSelector((state)=>state.Category.category);
     const search = useSelector((state)=>state.Search.Search)
+    const dispatch = useDispatch();
+    // const Foods = useSelector((state)=> state.Dish.dishes);
+
+    useEffect(()=>{
+      dispatch(getAllDishes());
+    },[dispatch])
   return (
     <>
     <Toaster position='top-center' reverseOrder={false}/>
