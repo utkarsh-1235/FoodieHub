@@ -6,7 +6,7 @@ import SearchSlice from "./SearchSlice"
 import PaymentSlice from './PaymentSlice'
 import AddressSlice from './AddressSlice'
 import RestaurantSlice from './RestaurantSlice'
-import { DishSlice } from "./DIshSlice"
+import  DishSlice  from "./DishSlice"
 
 const store = configureStore({
     reducer: {

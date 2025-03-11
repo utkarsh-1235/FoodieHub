@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react';
 import FoodItems from './FoodItems';
 import Data from '../Data/Data'
@@ -9,7 +9,7 @@ import { setSearchState } from '../Redux/SearchSlice';
 export default function CatagoryMenu() {
     const [activeCategory, setActiveCategory] = useState([]);    
 
-    const Categories = ['All', 'Breakfast', 'Lunch', 'Dinner','Snacks']
+    // const Categories = ['All', 'Breakfast', 'Lunch', 'Dinner','Snacks']
     const dispatch = useDispatch();
     const selectedCategory = useSelector((state)=>state.Category.category);
 
@@ -24,7 +24,7 @@ export default function CatagoryMenu() {
     },[])
   return (
     <div className='w-full bg-gradient-to-br from-red-200 to-red-800 min-h-screen text-white'>
-        <div className='w-1/2 flex flex-col md:flex-row px-4 py-6 md:px-10 justify-between items-center lg:ml-70 gap-10'>
+        <div className='w-2/3 flex flex-col md:flex-row px-4 py-6 md:px-10 justify-between items-center lg:ml-70 gap-10'>
         <div className='flex justify-center flex-wrap mt-6 ml-8 gap-4 md:justify-start'>
         <button
                    className={`px-4 py-2 transition duration-300 rounded-md ${selectedCategory === 'All' ? 'bg-red-600 text-white shadow-lg' : 'bg-red-400 hover:bg-red-500'}`}

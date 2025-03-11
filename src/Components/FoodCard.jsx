@@ -6,7 +6,7 @@ function FoodCard({id, img, name, price, desc, category, rating, handleToast}) {
 const dispatch = useDispatch();
 
   return (
-    <div className='flex flex-col w-80 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 min-h-[350px]'>
+    <div className='flex flex-col w-70 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 lg:min-h-[350px] min-h-[250px]'>
        <div>{
          (<span 
                      className='absolute left-2 bg-gray-800 text-xs px-2 py-1 rounded-t-lg'>

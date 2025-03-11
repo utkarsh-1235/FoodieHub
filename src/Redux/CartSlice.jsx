@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const localStorageGetItem = ()=>{
@@ -67,7 +67,7 @@ const cartSlice = createSlice({
             }
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
-        deletCart : (state,action)=>{
+        deletCart : (state)=>{
             state.cart = [];
             localStorage.removeItem("cart");
         }
@@ -75,7 +75,7 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder)=>{
             builder
-                    .addCase(CreateCart.pending,(state,action)=>{
+                    .addCase(CreateCart.pending,(state)=>{
                             state.loading = true;
                             state.error = null;
                              })
