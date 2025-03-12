@@ -7,13 +7,13 @@ const dispatch = useDispatch();
 
   return (
     <div className='flex flex-col w-70 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 lg:min-h-[350px] min-h-[250px]'>
-       <div>{
+       {/* <div>{
          (<span 
                      className='absolute left-2 bg-gray-800 text-xs px-2 py-1 rounded-t-lg'>
               {id}
         </span>
        )}
-          </div>
+          </div> */}
        <div className='relative w-full mt-3 ml-3'>
          <img 
          src={img} 
@@ -29,7 +29,7 @@ const dispatch = useDispatch();
           </span>
         </div>
     
-        <p className='text-black text-sm mt-2 flex-grow'>{desc.slice(0,50)}............</p>
+        <p className='text-black text-sm mt-2 flex-grow'>{String(desc).slice(0,50)}............</p>
        </div>
        <div className="flex items-center justify-between gap-2 mt-2 px-4 pb-4">
           <span className="text-gray-700 font-medium">₹{price} for one</span>

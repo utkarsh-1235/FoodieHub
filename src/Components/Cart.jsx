@@ -8,10 +8,11 @@ import { CreateCart } from '../Redux/CartSlice';
 
 function Cart() {
 
-    const CartItems = useSelector((state)=> state.Cart.cart);
+  const CartItems = useSelector((state)=> state.Cart.cart);
+    // const CartItems = useSelector((state)=>state.Dish?.dishes) || [];
     const [activeState, setActiveState] = useState(false);
     const dispatch = useDispatch();
-
+    
     const totalItems = CartItems.reduce((total,item)=> total + item.qty ,0)
 
     const totalPrice = CartItems.reduce((total, item)=> total + item.qty * item.price,0)
@@ -47,7 +48,7 @@ function Cart() {
          <div>
             {
                Array.isArray(CartItems) && CartItems.length>0 ? CartItems.map((CartItem)=>{
-                  return <ItemCart key={CartItem.id} Cart={CartItem}/>
+                  return <ItemCart key={CartItem._id} Cart={CartItem}/>
                 }) : (
                     <p className="text-gray-600 text-xl">Your cart is empty.</p>
                 )

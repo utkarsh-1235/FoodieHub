@@ -42,13 +42,13 @@ const cartSlice = createSlice({
             }
             else{
                 state.cart.push({...action.payload, qty: 1});
-                localStorage.setItem("cart", JSON.stringify(state.cart));
             }
-
+            
+            localStorage.setItem("cart", JSON.stringify(state.cart));
             console.log(state.cart);
         },
         inCreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product.id === action.payload.id)
+            const item = state.cart.find((product)=>product._id === action.payload._id)
 
             if(item){
                 item.qty = item.qty+1;
@@ -85,18 +85,22 @@ const cartSlice = createSlice({
                      })
                      .addCase(CreateCart.fulfilled,(state, action)=>{
 
-                        const item = state.cart.find((product)=> product.id === action.payload.id);
+                        // const item = state.cart.find((product)=> product.id === action.payload.id);
 
-                        if(item){
-                           item.qty = item.qty+1;
-                        }
-                        else{
-                            state.cart.push({...action.payload, qty: 1})
-                            localStorage.setItem('cart',JSON.stringify(state.cart));
-                        }
-                            
+                        // if(item){
+                        //    item.qty = item.qty+1;
+                        // }
+                        // else{
+                        //     state.cart.push({...action.payload, qty: 1})
+                        //     localStorage.setItem('cart',JSON.stringify(state.cart));
+                        // }
+                            state.cart = action.payload;
                             state.loading = false;
                             state.error = null;
+
+                            localStorage.setItem('cart',JSON.stringify(state.cart));
+                            localStorage.setItem('loading',JSON.stringify(state.loading));
+                            localStorage.setItem('error',JSON.stringify(state.error));
 
                             
                             

@@ -10,13 +10,12 @@ import { getAllDishes } from '../Redux/DishSlice'
 
 function FoodItems() {
     const handleToast = (name)=> { return toast.success(`${name} Added successfully to Cart`)}
-
     const selectedCategory = useSelector((state)=>state.Category.category) || 'All';
     const search = useSelector((state)=>state.Search.Search) || '';
     const dispatch = useDispatch();
     const Foods = useSelector((state)=> state.Dish?.dishes) || [];
     const loading = useSelector((state)=> state.Dish.loading)
-      console.log('Dishes',Foods);
+      // console.log('Dishes',Foods);
     useEffect(()=>{
     dispatch(getAllDishes());
   
@@ -29,12 +28,12 @@ function FoodItems() {
         {Foods && Foods.filter((food)=>
         (selectedCategory === 'All' || selectedCategory === food.category) &&(search === '' || food.name.toLowerCase().includes(search.toLowerCase()))).map((food) => (
                         <FoodCard 
-                            key={food.id} 
-                            id={food.id} 
+                            key={food._id} 
+                            id={food._id} 
                             img={food.img} 
                             name={food.name} 
                             price={food.price} 
-                            desc={food.desc} 
+                            desc={food.description} 
                             category={food.category} 
                             rating={food.rating} 
                             handleToast={handleToast} 
