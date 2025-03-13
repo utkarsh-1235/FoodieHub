@@ -48,7 +48,8 @@ function Cart() {
          <div>
             {
                Array.isArray(CartItems) && CartItems.length>0 ? CartItems.map((CartItem)=>{
-                  return <ItemCart key={CartItem._id} Cart={CartItem}/>
+                console.log(CartItem);
+                  return <ItemCart key={CartItem.id} Cart={CartItem}/>
                 }) : (
                     <p className="text-gray-600 text-xl">Your cart is empty.</p>
                 )

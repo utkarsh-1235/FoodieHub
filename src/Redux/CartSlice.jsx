@@ -48,8 +48,8 @@ const cartSlice = createSlice({
             console.log(state.cart);
         },
         inCreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product._id === action.payload._id)
-
+            const item = state.cart.find((product)=>product.id === action.payload.id)
+               console.log('items',item);
             if(item){
                 item.qty = item.qty+1;
             }
