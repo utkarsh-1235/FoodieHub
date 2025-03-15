@@ -4,7 +4,7 @@ import axios from "axios";
 const localStorageGetItem = ()=>{
     try{
         const savedCart = localStorage.getItem('cart');
-        return savedCart ? JSON.parse(savedCart) : [];
+        return Array.isArray(JSON.parse(savedCart)) ? JSON.parse(savedCart) : [];
     }catch(err){
         console.error("Error in loading the cart",err);
         return [];
@@ -13,7 +13,6 @@ const localStorageGetItem = ()=>{
 
 export const CreateCart = createAsyncThunk('cart/add', async(cartData,{rejectWithValue})=>{
     try{
-            console.log(cartData);
         const response = await axios.post('http://localhost:3000/api/carts/createCart',({
            cartData
         }))
@@ -25,20 +24,29 @@ export const CreateCart = createAsyncThunk('cart/add', async(cartData,{rejectWit
     }
 })
 
+export const getUserCart = createAsyncThunk('cart/user',async(userId,{rejectWithValue})=>{
+    try{
+        const response = await axios.get(`http://localhost:3000/api/carts/${userId}`);
+        console.log(response.data);
+        return response.data;
+    }catch(err){
+       return rejectWithValue(err.response.data) ;
+    }
+})
+
 const cartSlice = createSlice({
     name: 'Cart',
     initialState: {
-        cart: localStorageGetItem(),
+        cart: Array.isArray(localStorageGetItem()) ? localStorageGetItem() : [],
         loading: false,
         error: null
     },
     reducers: {
          addToCart: (state, action)=>{
-            console.log('action payload',action.payload)
-            const item = state.cart.find((product)=> product.id === action.payload.id)
+            const item = state.cart.find((product)=> product._id === action.payload._id)
             
             if(item){
-                item.qty = item.qty + 1;
+                item.quantity = item.quantity + 1;
             }
             else{
                 state.cart.push({...action.payload, qty: 1});
@@ -48,22 +56,21 @@ const cartSlice = createSlice({
             console.log(state.cart);
         },
         inCreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product.id === action.payload.id)
-               console.log('items',item);
+            const item = state.cart.find((product)=>product._id === action.payload.id)
             if(item){
-                item.qty = item.qty+1;
+                item.quantity = item.quantity+1;
             }
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         removeFromCart: (state, action)=>{
-            state.cart = state.cart.filter((item)=> item.id !== action.payload.id);
+            state.cart = state.cart.filter((item)=> item._id !== action.payload.id);
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         decreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product.id === action.payload.id)
+            const item = state.cart.find((product)=>product._id === action.payload.id)
 
             if(item){
-                item.qty = item.qty-1;
+                item.quantity = item.quantity-1;
             }
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
@@ -94,16 +101,35 @@ const cartSlice = createSlice({
                         //     state.cart.push({...action.payload, qty: 1})
                         //     localStorage.setItem('cart',JSON.stringify(state.cart));
                         // }
-                            state.cart = action.payload;
+                            state.cart = Array.isArray(action.payload) ? action.payload : [] ;
                             state.loading = false;
                             state.error = null;
-
+                            
+                            
                             localStorage.setItem('cart',JSON.stringify(state.cart));
                             localStorage.setItem('loading',JSON.stringify(state.loading));
                             localStorage.setItem('error',JSON.stringify(state.error));
 
                             
                             
+                     })
+                     .addCase(getUserCart.pending, (state)=>{
+                        state.loading = true;
+                        state.error = null;
+                     })
+                     .addCase(getUserCart.rejected, (state, action)=>{
+                        state.loading = false;
+                        state.error = action.payload;
+                     })
+                     .addCase(getUserCart.fulfilled, (state, action)=>{
+                        state.cart = Array.isArray(action.payload.cartItems) ? action.payload.cartItems : [];
+                        state.loading = false;
+                        state.error = null;
+                         
+                        console.log('carts',state.cart);
+                        localStorage.setItem('cart',JSON.stringify(state.cart));
+                        localStorage.setItem('loading',JSON.stringify(state.loading));
+                        localStorage.setItem('error',JSON.stringify(state.error));
                      })
     }
 })

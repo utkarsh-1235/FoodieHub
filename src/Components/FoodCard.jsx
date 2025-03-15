@@ -1,9 +1,25 @@
 import React, { useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { addToCart } from '../Redux/CartSlice'
 
 function FoodCard({id, img, name, price, desc, category, rating, handleToast}) {
 const dispatch = useDispatch();
+
+const handleAddToCart = ()=>{
+  const itemprice = price ?? 0;
+     dispatch(addToCart({
+      id,
+      dish:{
+       name: name,
+       image: img,
+       price: price
+      },
+      quantity: 1, // Ensure quantity is always present
+    }));
+
+    if(name) handleToast(name);
+};
+
 
   return (
     <div className='flex flex-col w-70 h-[40%] bg-white shadow-lg rounded-lg overflow-hidden relative p-4 lg:min-h-[350px] min-h-[250px]'>
@@ -34,10 +50,7 @@ const dispatch = useDispatch();
        <div className="flex items-center justify-between gap-2 mt-2 px-4 pb-4">
           <span className="text-gray-700 font-medium">₹{price} for one</span>
           <button className='bg-red-500 p-2 rounded-lg font-bold hover:bg-red-600 text-sm' 
-                  onClick={()=>{
-                    dispatch(addToCart({ id, img, name, price, desc, category, rating,qty:1}));
-                   if(name) handleToast(name)
-                    }}> Add to Cart</button>
+                  onClick={ handleAddToCart}> Add to Cart</button>
           
         </div>
     </div>

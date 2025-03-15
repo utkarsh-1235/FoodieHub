@@ -1,29 +1,38 @@
-import React, { use, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import ItemCart from './ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { CreateCart } from '../Redux/CartSlice';
+import { CreateCart, getUserCart } from '../Redux/CartSlice';
 
 function Cart() {
 
-  const CartItems = useSelector((state)=> state.Cart.cart);
+  const CartItems = useSelector((state)=> state.Cart.cart) || [];
+  console.log(CartItems)
     // const CartItems = useSelector((state)=>state.Dish?.dishes) || [];
     const [activeState, setActiveState] = useState(false);
     const dispatch = useDispatch();
     
-    const totalItems = CartItems.reduce((total,item)=> total + item.qty ,0)
+    const totalItems = Array.isArray(CartItems) ? CartItems.reduce((total,item)=> total + item.quantity || 0 ,0) : 0;
 
-    const totalPrice = CartItems.reduce((total, item)=> total + item.qty * item.price,0)
+    const totalPrice = Array.isArray(CartItems) 
+  ? CartItems.reduce((total, item) => total + (item.quantity || 0) * (item.dish?.price || 0), 0)
+  : 0;
     const user = useSelector((state)=> state.User.user);
+
+    useEffect(()=>{
+      if(user?.user?._id){
+        dispatch(getUserCart(user.user._id));
+      }
+    },[dispatch, user])
 
     const navigate = useNavigate();
     const handleCheckout = ()=>{
      const cartData = {
       userId: user.user._id,
        items: CartItems.map((item)=>({
-         dishId: item.id,
+         dishId: item._id,
          qty: item.qty
        })), 
        totalPrice, 
@@ -48,8 +57,8 @@ function Cart() {
          <div>
             {
                Array.isArray(CartItems) && CartItems.length>0 ? CartItems.map((CartItem)=>{
-                console.log(CartItem);
-                  return <ItemCart key={CartItem.id} Cart={CartItem}/>
+                
+                  return <ItemCart key={CartItem._id} Cart={CartItem}/>
                 }) : (
                     <p className="text-gray-600 text-xl">Your cart is empty.</p>
                 )

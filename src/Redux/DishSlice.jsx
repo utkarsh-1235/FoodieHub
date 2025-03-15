@@ -43,7 +43,7 @@ export const DishSlice = createSlice({
                  
               })
               .addCase(getAllDishes.fulfilled,(state,action)=>{
-                  console.log('Data', action.payload)
+                //   console.log('Data', action.payload)
                   state.dishes = action.payload ;
                   state.loading = false;
                   state.error = null;

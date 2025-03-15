@@ -45,7 +45,7 @@ function SignUp() {
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onsubmit)} className='flex items-center flex-col space-y-4'>
                  <InputComponent/>
-                 <button className='hover:text-blue-400'>Already have an account </button>
+                 <button className='hover:text-blue-400' onClick={onclick}>Already have an account </button>
                  <input type='submit' className='block w-[40%] mx-auto bg-yellow-400 rounded-md text-black p-2 cursor-pointer hover:bg-yellow-600'/>
                 </form>
             </FormProvider>
