@@ -32,8 +32,8 @@ function Cart() {
      const cartData = {
       userId: user.user._id,
        items: CartItems.map((item)=>({
-         dishId: item._id,
-         qty: item.qty
+         dishId: item.id || item._id,
+         qty: item.quantity
        })), 
        totalPrice, 
        totalItems

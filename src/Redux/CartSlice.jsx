@@ -13,6 +13,7 @@ const localStorageGetItem = ()=>{
 
 export const CreateCart = createAsyncThunk('cart/add', async(cartData,{rejectWithValue})=>{
     try{
+        console.log('cart',cartData);
         const response = await axios.post('http://localhost:3000/api/carts/createCart',({
            cartData
         }))
@@ -43,31 +44,38 @@ const cartSlice = createSlice({
     },
     reducers: {
          addToCart: (state, action)=>{
-            const item = state.cart.find((product)=> product._id === action.payload._id)
-            
+            const id = action.payload.id || action.payload._id ;
+            // console.log(id)
+            const item = state.cart.find((product)=> product.id === id)
+            // console.log('item',item);
             if(item){
                 item.quantity = item.quantity + 1;
             }
             else{
-                state.cart.push({...action.payload, qty: 1});
+                state.cart.push({...action.payload, quantity: 1});
             }
             
             localStorage.setItem("cart", JSON.stringify(state.cart));
             console.log(state.cart);
         },
-        inCreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product._id === action.payload.id)
-            if(item){
-                item.quantity = item.quantity+1;
+        inCreaseQty: (state, action) => {
+            const id = action.payload.id || action.payload._id;
+            console.log(action.payload.id);
+            const item = state.cart.find((product) => product.id === id)
+            console.log('item',item)
+            if (item) {
+                item.quantity += 1;
             }
             localStorage.setItem("cart", JSON.stringify(state.cart));
+        
+        
         },
         removeFromCart: (state, action)=>{
-            state.cart = state.cart.filter((item)=> item._id !== action.payload.id);
+            state.cart = state.cart.filter((item)=> item.id !== action.payload.id);
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         decreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product._id === action.payload.id)
+            const item = state.cart.find((product)=>product.id === action.payload.id)
 
             if(item){
                 item.quantity = item.quantity-1;
