@@ -4,7 +4,15 @@ import axios from "axios";
 const localStorageGetItem = ()=>{
     try{
         const savedCart = localStorage.getItem('cart');
-        return Array.isArray(JSON.parse(savedCart)) ? JSON.parse(savedCart) : [];
+        const parsedCart = JSON.parse(savedCart) || [];
+        return parsedCart.map((item)=>({
+            ...item,
+            _id: item._id || item.id,
+            dish: {
+                ...item.dish,
+                _id: item.dish?._id || item.dish?.id
+            }
+        }))
     }catch(err){
         console.error("Error in loading the cart",err);
         return [];
@@ -44,9 +52,9 @@ const cartSlice = createSlice({
     },
     reducers: {
          addToCart: (state, action)=>{
-            const id = action.payload.id || action.payload._id ;
+            const id = action.payload?._id ;
             // console.log(id)
-            const item = state.cart.find((product)=> product.id === id)
+            const item = state.cart.find((product)=> product._id === id)
             // console.log('item',item);
             if(item){
                 item.quantity = item.quantity + 1;
@@ -59,9 +67,9 @@ const cartSlice = createSlice({
             console.log(state.cart);
         },
         inCreaseQty: (state, action) => {
-            const id = action.payload.id || action.payload._id;
-            console.log(action.payload.id);
-            const item = state.cart.find((product) => product.id === id)
+        
+            // console.log(action.payload.id);
+            const item = state.cart.find((product) => product._id === action.payload?._id)
             console.log('item',item)
             if (item) {
                 item.quantity += 1;
@@ -71,11 +79,11 @@ const cartSlice = createSlice({
         
         },
         removeFromCart: (state, action)=>{
-            state.cart = state.cart.filter((item)=> item.id !== action.payload.id);
+            state.cart = state.cart.filter((item)=> item._id !== action.payload?._id);
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
         decreaseQty: (state, action)=>{
-            const item = state.cart.find((product)=>product.id === action.payload.id)
+            const item = state.cart.find((product)=>product._id === action.payload?._id)
 
             if(item){
                 item.quantity = item.quantity-1;

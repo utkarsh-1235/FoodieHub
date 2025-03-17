@@ -15,7 +15,7 @@ function FoodItems() {
     const dispatch = useDispatch();
     const Foods = useSelector((state)=> state.Dish?.dishes) || [];
     const loading = useSelector((state)=> state.Dish.loading)
-      // console.log('Dishes',Foods);
+      console.log('Foods',Foods);
     useEffect(()=>{
     dispatch(getAllDishes());
   
@@ -27,10 +27,11 @@ function FoodItems() {
    {loading ? (<div className='text-center text-lg font-bold mt-6'>Loading Dishes.....</div>   ) : (<div  className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-15 gap-10 p-6 items-start'>
         {Foods && Foods.filter((food)=>
         (selectedCategory === 'All' || selectedCategory === food.category) &&(search === '' || food.name.toLowerCase().includes(search.toLowerCase()))).map((food) => (
+          
                         <FoodCard 
                             key={food._id} 
                             id={food._id} 
-                            img={food.img} 
+                            img={food.image} 
                             name={food.name} 
                             price={food.price} 
                             desc={food.description} 

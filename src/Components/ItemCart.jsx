@@ -21,7 +21,7 @@ export default function ItemCart({Cart}) {
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/>
         <img src={Cart.dish.image}
-        alt={Cart.dish.name}
+        alt={Cart.dish?.name}
         className='w-[70px] h-[50px]'/>
 
         <div className='leading-5'>
@@ -30,15 +30,15 @@ export default function ItemCart({Cart}) {
                 <span className='flex text-red-400 font-bold'> <FaIndianRupeeSign className='mt-1'/> {Cart.dish?.price * Cart.quantity}</span>
                 <div className='flex justify-center items-center absolute right-7 gap-2'>
                 <AiOutlinePlus className='border-2 border-gray-600 text-black font-bold p-1 text-xl rounded-md hover:text-red-500 hover:border-red-400 hover:bg-red-500 hover:pointer-cursor transition-all ease-linear'
-                onClick={()=>dispatch(inCreaseQty({id: Cart.id}))}
+                onClick={()=>dispatch(inCreaseQty({_id: Cart._id}))}
                 />
                 <span>{Cart.quantity}</span>
                 <AiOutlineMinus className='border-2 border-gray-600 text-black font-bold p-1 text-xl rounded-md hover:text-red-500 hover:bg-red-400 hover:border-red-500 hover:pointer-cursor transition-all ease-linear'
                 onClick={()=>dispatch(()=>{
                     if(Cart.quantity > 1){
-                        dispatch(decreaseQty({id: Cart.id}))
+                        dispatch(decreaseQty({_id: Cart._id}))
                     }else{
-                        dispatch(removeFromCart({id: Cart.id}))
+                        dispatch(removeFromCart({_id: Cart._id}))
                         if(Cart.dish?.name) handleRemove(Cart.dish?.name)
                     }
                 })}/>

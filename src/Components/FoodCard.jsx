@@ -8,11 +8,12 @@ const dispatch = useDispatch();
 const handleAddToCart = ()=>{
   const itemprice = price ?? 0;
      dispatch(addToCart({
-      id,
+      _id: id,
       dish:{
+       _id: id,
        name: name,
        image: img,
-       price: price
+       price: itemprice
       },
       quantity: 1, // Ensure quantity is always present
     }));
