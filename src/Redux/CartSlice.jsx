@@ -43,6 +43,17 @@ export const getUserCart = createAsyncThunk('cart/user',async(userId,{rejectWith
     }
 })
 
+export const removeItemFromCart = createAsyncThunk('cart/item/delete',async({item, userId}, {rejectWithValue})=>{
+    try{
+        console.log(item, userId);
+         const response = await axios.post('http://localhost:3000/api/carts/delete',{data:{items: [item._id], UserId: userId}});
+
+         return response.data;
+    }
+    catch(err){
+        return rejectWithValue(err.response.data);
+    }
+})
 const cartSlice = createSlice({
     name: 'Cart',
     initialState: {
@@ -78,10 +89,10 @@ const cartSlice = createSlice({
         
         
         },
-        removeFromCart: (state, action)=>{
-            state.cart = state.cart.filter((item)=> item._id !== action.payload?._id);
-            localStorage.setItem("cart", JSON.stringify(state.cart));
-        },
+        // removeFromCart: (state, action)=>{
+        //     state.cart = state.cart.filter((item)=> item._id !== action.payload?._id);
+        //     localStorage.setItem("cart", JSON.stringify(state.cart));
+        // },
         decreaseQty: (state, action)=>{
             const item = state.cart.find((product)=>product._id === action.payload?._id)
 
@@ -108,15 +119,7 @@ const cartSlice = createSlice({
                      })
                      .addCase(CreateCart.fulfilled,(state, action)=>{
 
-                        // const item = state.cart.find((product)=> product.id === action.payload.id);
-
-                        // if(item){
-                        //    item.qty = item.qty+1;
-                        // }
-                        // else{
-                        //     state.cart.push({...action.payload, qty: 1})
-                        //     localStorage.setItem('cart',JSON.stringify(state.cart));
-                        // }
+                        
                             state.cart = Array.isArray(action.payload) ? action.payload : [] ;
                             state.loading = false;
                             state.error = null;
@@ -147,9 +150,25 @@ const cartSlice = createSlice({
                         localStorage.setItem('loading',JSON.stringify(state.loading));
                         localStorage.setItem('error',JSON.stringify(state.error));
                      })
+                     .addCase(removeItemFromCart.rejected, (state, action)=>{
+                        state.error = action.payload;
+                        state.loading = false;
+                     })
+                     .addCase(removeItemFromCart.pending,(state)=>{
+                        state.loading = true;
+                        state.error = null;
+                     })
+                     .addCase(removeItemFromCart.fulfilled,(state,action)=>{
+                        state.cart = action.payload;
+                        state.error = null;
+                        state.loading = false;
+                        localStorage.setItem('cart',JSON.stringify(state.cart));
+                        localStorage.setItem('loading',JSON.stringify(state.loading));
+                        localStorage.setItem('error',JSON.stringify(state.error));
+                     })
     }
 })
 
-export const{addToCart, removeFromCart, inCreaseQty, decreaseQty, deletCart} = cartSlice.actions;
+export const{addToCart, inCreaseQty, decreaseQty, deletCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { MdDelete } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
-import { removeFromCart, inCreaseQty, decreaseQty } from '../Redux/CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { inCreaseQty, decreaseQty, removeItemFromCart } from '../Redux/CartSlice';
 import toast from 'react-hot-toast';
 
 export default function ItemCart({Cart}) {
@@ -12,12 +12,17 @@ export default function ItemCart({Cart}) {
     const dispatch = useDispatch();
 
     const handleRemove = (name)=>( toast.error(`${name} removed from your Cart`))
+    const userId = useSelector((state)=> state.User.user.user._id);
     
 
   return (
     <div className='shadow-md gap-2 flex rounded-lg p-2 mb-3'>
-        <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
+        {/* <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
         onClick={()=>{dispatch(removeFromCart(Cart));
+            if(Cart.dish?.name) handleRemove(Cart.dish?.name)
+        }}/> */}
+        <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
+        onClick={()=>{dispatch(removeItemFromCart({item: Cart,userId}));
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/>
         <img src={Cart.dish.image}
@@ -38,7 +43,8 @@ export default function ItemCart({Cart}) {
                     if(Cart.quantity > 1){
                         dispatch(decreaseQty({_id: Cart._id}))
                     }else{
-                        dispatch(removeFromCart({_id: Cart._id}))
+                        // dispatch(removeFromCart({_id: Cart._id}))
+                        dispatch(removeItemFromCart({Cart, userId}))
                         if(Cart.dish?.name) handleRemove(Cart.dish?.name)
                     }
                 })}/>
