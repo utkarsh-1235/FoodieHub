@@ -15,7 +15,7 @@ function FoodItems() {
     const dispatch = useDispatch();
     const Foods = useSelector((state)=> state.Dish?.dishes) || [];
     const loading = useSelector((state)=> state.Dish.loading)
-      console.log('Foods',Foods);
+
     useEffect(()=>{
     dispatch(getAllDishes());
   

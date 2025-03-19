@@ -13,7 +13,7 @@ export default function ItemCart({Cart}) {
 
     const handleRemove = (name)=>( toast.error(`${name} removed from your Cart`))
     const userId = useSelector((state)=> state.User.user.user._id);
-    
+       console.log(Cart?.dish?.dishId);
 
   return (
     <div className='shadow-md gap-2 flex rounded-lg p-2 mb-3'>
@@ -35,13 +35,14 @@ export default function ItemCart({Cart}) {
                 <span className='flex text-red-400 font-bold'> <FaIndianRupeeSign className='mt-1'/> {Cart.dish?.price * Cart.quantity}</span>
                 <div className='flex justify-center items-center absolute right-7 gap-2'>
                 <AiOutlinePlus className='border-2 border-gray-600 text-black font-bold p-1 text-xl rounded-md hover:text-red-500 hover:border-red-400 hover:bg-red-500 hover:pointer-cursor transition-all ease-linear'
-                onClick={()=>dispatch(inCreaseQty({_id: Cart._id}))}
+                onClick={()=>dispatch(inCreaseQty({_id: Cart.dish?.dishId }))}
                 />
                 <span>{Cart.quantity}</span>
                 <AiOutlineMinus className='border-2 border-gray-600 text-black font-bold p-1 text-xl rounded-md hover:text-red-500 hover:bg-red-400 hover:border-red-500 hover:pointer-cursor transition-all ease-linear'
                 onClick={()=>dispatch(()=>{
                     if(Cart.quantity > 1){
-                        dispatch(decreaseQty({_id: Cart._id}))
+                        console.log('dishId', Cart.dish?.dishId)
+                        dispatch(decreaseQty( {id: Cart.dish?.dishId}))
                     }else{
                         // dispatch(removeFromCart({_id: Cart._id}))
                         dispatch(removeItemFromCart({Cart, userId}))

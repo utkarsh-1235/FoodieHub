@@ -1,21 +1,27 @@
 import React, { useContext } from 'react'
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { addToCart } from '../Redux/CartSlice'
 
 function FoodCard({id, img, name, price, desc, category, rating, handleToast}) {
 const dispatch = useDispatch();
+const dish = useSelector((state)=> state.Dish.dishes)
+
 
 const handleAddToCart = ()=>{
   const itemprice = price ?? 0;
-     dispatch(addToCart({
-       dish:{
-         name: name,
-         image: img,
-         price: itemprice
-        },
-        quantity: 1, // Ensure quantity is always present
-        _id: id,
-    }));
+
+  const cart = {
+    dish:{
+      dishId: id,
+      name: name,
+      image: img,
+      price: itemprice
+     },
+     quantity: 1, // Ensure quantity is always present
+     _id: id,
+ }
+ console.log('cart',cart)
+     dispatch(addToCart(cart));
 
     if(name) handleToast(name);
 };

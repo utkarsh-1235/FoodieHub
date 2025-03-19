@@ -1,10 +1,10 @@
-import React, { use, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import ItemCart from './ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { CreateCart, getUserCart } from '../Redux/CartSlice';
+import { CreateCart, getUserCart, removeItemFromCart } from '../Redux/CartSlice';
 
 function Cart() {
 
@@ -20,6 +20,8 @@ function Cart() {
   ? CartItems.reduce((total, item) => total + (item.quantity || 0) * (item.dish?.price || 0), 0)
   : 0;
     const user = useSelector((state)=> state.User.user);
+    const dish = useSelector((state)=> state.Dish.dishes);
+    
 
     useEffect(()=>{
       if(user?.user?._id){
@@ -31,15 +33,19 @@ function Cart() {
     const handleCheckout = ()=>{
      const cartData = {
       userId: user.user._id,
-       items: CartItems.map((item)=>({
-         dishId: item.id || item._id,
+       items: CartItems.map((item)=>{
+        console.log(item);
+        const dishIds = dish.find((d)=> d._id === item.dish.dishId);
+        console.log(dishIds);
+        return {
+         dishId: dishIds?._id,
          qty: item.quantity
-       })), 
+       }}), 
        totalPrice, 
        totalItems
      }
 
-
+     
    dispatch(CreateCart({cartData}));
    navigate(`/payment?price=${totalPrice}&items=${totalItems}`)
     }
@@ -60,7 +66,7 @@ function Cart() {
                 
                   return <ItemCart key={CartItem._id} Cart={CartItem}/>
                 }) : (
-                    <p className="text-gray-600 text-xl">Your cart is empty.</p>
+                    <p  className="text-gray-600 text-xl">Your cart is empty.</p>
                 )
             }
 

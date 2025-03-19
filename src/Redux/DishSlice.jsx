@@ -43,7 +43,7 @@ export const DishSlice = createSlice({
                  
               })
               .addCase(getAllDishes.fulfilled,(state,action)=>{
-                console.log('Data', action.payload)
+                
         
                   state.dishes = action.payload.map(({ name, price,img, description, rating, category, _id }) => ({
                     name,
@@ -55,6 +55,7 @@ export const DishSlice = createSlice({
                     _id                }));
                   state.loading = false;
                   state.error = null;
+                // console.log('Data', state.dishes);
                   localStorage.setItem('dishes',JSON.stringify(state.dishes));
                   localStorage.setItem('loading', false);
                   localStorage.setItem('error',null);
