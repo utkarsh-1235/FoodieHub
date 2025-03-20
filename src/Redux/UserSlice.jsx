@@ -35,6 +35,15 @@ export const login = createAsyncThunk('login',async(userData,{rejectWithValue})=
     }
 })
 
+export const addAddress = createAsyncThunk('add/address', async({userId, address},{rejectWithValue})=>{
+    try{
+        
+        const response = await axios.post('http://localhost:3000/api/users/addAddress',{userId, address});
+        return response.data;
+    }catch(err){
+        return rejectWithValue(err.response.data);
+    }
+})
 const UserSlice = createSlice({
     name: 'User',
     initialState: {
@@ -105,6 +114,23 @@ const UserSlice = createSlice({
                 localStorage.setItem('isAuthenticated', 'true');
                 localStorage.setItem('token',state.token);
 
+              })
+              .addCase(addAddress.rejected,(state, action)=>{
+                state.error = action.payload;
+                state.loading = false;
+              })
+              .addCase(addAddress.pending,(state)=>{
+                state.error = null;
+                state.loading = true;
+              })
+              .addCase(addAddress.fulfilled,(state, action)=>{
+                state.user = action.payload;
+                state.loading = false;
+                state.error = null;
+
+                localStorage.setItem('user',JSON.stringify(state.user));
+                localStorage.setItem('loading',JSON.stringify(state.loading));
+                localStorage.setItem('error',JSON.stringify(state.error));
               })
               
     }

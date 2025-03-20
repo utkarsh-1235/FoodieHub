@@ -22,7 +22,7 @@ export default function ItemCart({Cart}) {
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/> */}
         <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
-        onClick={()=>{dispatch(removeItemFromCart({item: Cart,userId}));
+        onClick={()=>{dispatch(removeItemFromCart({item: {id:Cart._id, userId}}));
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/>
         <img src={Cart.dish.image}
@@ -42,7 +42,7 @@ export default function ItemCart({Cart}) {
                 onClick={()=>dispatch(()=>{
                     if(Cart.quantity > 1){
                         console.log('dishId', Cart.dish?.dishId)
-                        dispatch(decreaseQty( {id: Cart.dish?.dishId}))
+                        dispatch(decreaseQty( {_id: Cart.dish?.dishId}))
                     }else{
                         // dispatch(removeFromCart({_id: Cart._id}))
                         dispatch(removeItemFromCart({Cart, userId}))

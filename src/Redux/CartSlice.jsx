@@ -43,10 +43,10 @@ export const getUserCart = createAsyncThunk('cart/user',async(userId,{rejectWith
     }
 })
 
-export const removeItemFromCart = createAsyncThunk('cart/item/delete',async({item, userId}, {rejectWithValue})=>{
+export const removeItemFromCart = createAsyncThunk('cart/item/delete',async(item, {rejectWithValue})=>{
     try{
-        console.log(item, userId);
-         const response = await axios.post('http://localhost:3000/api/carts/delete',{data:{items: [item._id], UserId: userId}});
+        console.log(item);
+         const response = await axios.post('http://localhost:3000/api/carts/delete', item);
 
          return response.data;
     }
@@ -100,7 +100,7 @@ const cartSlice = createSlice({
         decreaseQty: (state, action) => {
             const id = action.payload._id; // Get the dish ID from the action payload
             const item = state.cart.find(product => product.dish.dishId === id); // Find the item using dishId
-          console.log(state.cart);
+          console.log(id);
             if (item) {
                 if (item.quantity > 1) { // Ensure quantity does not go below 1
                     item.quantity -= 1; // Decrease quantity
