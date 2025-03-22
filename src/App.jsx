@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { BrowserRouter,Routes, Route } from 'react-router-dom'
 
 import LoginPage from './Pages/LoginPage'
@@ -6,10 +6,11 @@ import SignUp from './Pages/SignUp'
 import Home from './Pages/Home'
 import About from './Pages/About'
 import CatagoryMenu from './Components/CatagoryMenu'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import PaymentPage from './Pages/PaymentPage'
 import RestaurantList from './Components/RestaurantList'
 import AddRestaurant from './Components/AddRestaurant'
+import GetOrders from './Components/getOrders'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path='/food' element={<CatagoryMenu/>}/>
       <Route path='/restaurant' element={<RestaurantList/>}/>
       <Route path='/add' element={<AddRestaurant/>}/>
+      <Route path='/user/orders' element ={<GetOrders/>}/>
       
       </Routes>
       </BrowserRouter>

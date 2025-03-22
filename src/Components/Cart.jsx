@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react'
+import  {  useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import ItemCart from './ItemCart'
 import { useDispatch, useSelector } from 'react-redux'
@@ -56,7 +56,7 @@ function Cart() {
     <div className={`fixed top-0 right-0 bg-white w-full lg:w-[20vw] min-h-screen text-black p-5 ${activeState === true ? 'translate-x-0' : 'translate-x-full'} transition-all duration-500 z-50`}>
          <div className='flex justify-between my-3'>
             <span className='text-xl font-bold text-gray-800'>
-                My Order
+                My Cart
             </span>
             <IoMdClose className='border-2 border-gray-600 text-black font-bold p-1 text-xl rounded-md hover:text-red-500 hover:border-red-500 hover:pointer-cursor' onClick={()=>setActiveState(!activeState)}/>
          </div>

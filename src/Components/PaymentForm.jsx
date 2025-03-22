@@ -1,6 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrders } from '../Redux/orderSlice';
 
 
 const paymentMethods = [
@@ -18,6 +19,7 @@ export default function PaymentForm() {
         expiryDate:'',
         cvv:''
     })
+    const dispatch = useDispatch();
     const [method, setMethod] = useState(paymentMethods[0].id);
   
     const handleInput = (e)=>{
@@ -26,6 +28,7 @@ export default function PaymentForm() {
     }
 
     const handlePayment = ()=>{
+        dispatch(createOrders(payment));
         alert(`Payment method selected: ${method}\nDetails: ${JSON.stringify(payment)}`);
     }
 
