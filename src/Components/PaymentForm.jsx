@@ -1,5 +1,6 @@
 import { RadioGroup } from '@headlessui/react'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 
 const paymentMethods = [
@@ -28,10 +29,13 @@ export default function PaymentForm() {
         alert(`Payment method selected: ${method}\nDetails: ${JSON.stringify(payment)}`);
     }
 
+    const isAddress = useSelector((state)=>state.User.user.user.address);
+
+    console.log(isAddress);
     
   return (
-    <>
-    <div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
+   <>
+  { isAddress.length > 0  ? (<div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
         <h2 className='text-center text-xl font-semibold mb-4'> Select Payment Method</h2> 
         <div className='ml-10'>
         <RadioGroup  value={method} onChange={setMethod}>
@@ -93,7 +97,16 @@ export default function PaymentForm() {
         <button className="mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" onClick={handlePayment}>
         Proceed to Pay
       </button>
-    </div>
+    </div>): (
+                <div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
+                    <h2 className='text-red-500 text-xl font-semibold mb-4'>
+                        Please add a delivery address first!
+                    </h2>
+                    <p className='text-gray-600'>
+                        You need to provide a shipping address before proceeding to payment.
+                    </p>
+                </div>
+            )}
     </>
   )
 }

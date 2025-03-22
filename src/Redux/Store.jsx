@@ -7,6 +7,7 @@ import PaymentSlice from './PaymentSlice'
 import AddressSlice from './AddressSlice'
 import RestaurantSlice from './RestaurantSlice'
 import  DishSlice  from "./DishSlice"
+import OrderSlice from "./orderSlice"
 
 const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
         Payment: PaymentSlice,
         Address: AddressSlice,
         Restaurant: RestaurantSlice,
-        Dish: DishSlice
+        Dish: DishSlice,
+        Order: OrderSlice
     }
 })
 
