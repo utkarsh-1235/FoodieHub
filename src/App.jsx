@@ -11,6 +11,7 @@ import PaymentPage from './Pages/PaymentPage'
 import RestaurantList from './Components/RestaurantList'
 import AddRestaurant from './Components/AddRestaurant'
 import GetOrders from './Components/getOrders'
+import AddressComponent from './Components/AddressComponent'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path='/restaurant' element={<RestaurantList/>}/>
       <Route path='/add' element={<AddRestaurant/>}/>
       <Route path='/user/orders' element ={<GetOrders/>}/>
+      <Route path='/add-order' element={<AddressComponent/>}/>
       
       </Routes>
       </BrowserRouter>

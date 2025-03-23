@@ -34,9 +34,9 @@ function Cart() {
      const cartData = {
       userId: user.user._id,
        items: CartItems.map((item)=>{
-        console.log(item);
+        // console.log(item);
         const dishIds = dish.find((d)=> d._id === item.dish.dishId);
-        console.log(dishIds);
+        // console.log(dishIds);
         return {
          dishId: dishIds?._id,
          qty: item.quantity

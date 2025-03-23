@@ -1,7 +1,8 @@
 import { RadioGroup } from '@headlessui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrders } from '../Redux/orderSlice';
+import { getUserCart } from '../Redux/CartSlice';
 
 
 const paymentMethods = [
@@ -26,9 +27,42 @@ export default function PaymentForm() {
         const {name, value} = e.target;
         setPayment((prev)=>({...prev, [name]:value}));
     }
+    const user = useSelector((state)=> state.User.user);
+    const cart = useSelector((state)=>state.Cart.cart);
+    
+    useEffect(()=>{
+         dispatch(getUserCart(user?.user._id));
+    },[dispatch, user])
+
+    useEffect(()=>{
+        console.log('Cart Updated in Payment Component:',cart);
+    },[cart])
+
+
+    console.log('cart',cart);
+    const createOrder = {
+        user: user?.user?._id,
+        payment,
+        items: cart.map((item)=>{
+            return {
+                dishId: item.dish.dishId,
+                quantity: item.quantity
+            }
+        }) 
+    }
 
     const handlePayment = ()=>{
-        dispatch(createOrders(payment));
+        if (method === 'upi' && !payment.upiId) {
+            alert('Please enter your UPI ID.');
+            return;
+        }
+        if (method === 'card') {
+            if (!payment.cardNumber || !payment.expiryDate || !payment.cvv) {
+                alert('Please fill in all card details.');
+                return;
+            }
+        }
+        dispatch(createOrders(createOrder));
         alert(`Payment method selected: ${method}\nDetails: ${JSON.stringify(payment)}`);
     }
 
@@ -38,7 +72,7 @@ export default function PaymentForm() {
     
   return (
    <>
-  { isAddress.length > 0  ? (<div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
+  { isAddress  ? (<div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
         <h2 className='text-center text-xl font-semibold mb-4'> Select Payment Method</h2> 
         <div className='ml-10'>
         <RadioGroup  value={method} onChange={setMethod}>

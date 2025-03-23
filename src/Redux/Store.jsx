@@ -8,6 +8,7 @@ import AddressSlice from './AddressSlice'
 import RestaurantSlice from './RestaurantSlice'
 import  DishSlice  from "./DishSlice"
 import OrderSlice from "./orderSlice"
+import logger from "redux-logger"
 
 const store = configureStore({
     reducer: {
@@ -20,7 +21,8 @@ const store = configureStore({
         Restaurant: RestaurantSlice,
         Dish: DishSlice,
         Order: OrderSlice
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), // Enable logging
 })
 
 export default store;

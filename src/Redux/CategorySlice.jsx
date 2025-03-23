@@ -10,7 +10,7 @@ const CategoryStorage = ()=>{
         return 'All'
     }
 
-  return 
+  
 }
 
 const CategorySlice = createSlice({

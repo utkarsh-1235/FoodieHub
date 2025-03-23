@@ -4,6 +4,7 @@ import axios from "axios";
 const localStorageGetItem = ()=>{
     try{
         const savedCart = localStorage.getItem('cart');
+        console.log('savedCart',savedCart);
         const parsedCart = JSON.parse(savedCart) || [];
         return parsedCart.map((item)=>({
             ...item,
@@ -64,8 +65,10 @@ const cartSlice = createSlice({
     reducers: {
          addToCart: (state, action)=>{
             const id = action.payload?.dish?.dishId  ;
-        console.log(id);
-        console.log(state.cart);
+        
+        console.log('Adding item with Dish ID:', id, 'to Cart:', state.cart);
+     if (!id) return; // Prevent errors if dishId is missing
+     
             const item = state.cart.find((product)=> product.dish.dishId === id);
              console.log('item',item);
             if(item){
@@ -153,12 +156,12 @@ const cartSlice = createSlice({
                         state.error = action.payload;
                      })
                      .addCase(getUserCart.fulfilled, (state, action)=>{
-                        console.log('cartSLice',action.payload);
+                        // console.log('cartSLice',action.payload);
                         state.cart = Array.isArray(action.payload.cartItems) ? action.payload.cartItems : [];
                         state.loading = false;
                         state.error = null;
                          
-                        // console.log('carts',state.cart);
+                        console.log('Updated Cart in Redux State:', state.cart);
                         localStorage.setItem('cart',JSON.stringify(state.cart));
                         localStorage.setItem('loading',JSON.stringify(state.loading));
                         localStorage.setItem('error',JSON.stringify(state.error));
