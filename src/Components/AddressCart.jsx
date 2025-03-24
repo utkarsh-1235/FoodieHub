@@ -1,7 +1,7 @@
 function AddressCart({ id, state, name, phoneNumber, city, pinCode, district, address, isSelected, onSelect, onEdit, onDeliver, onToggle, isExpanded }) {
     return (
       <>
-        <div className='w-full max-w-xl flex justify-center bg-white text-black shadow-lg rounded-lg overflow-hidden relative p-4 items-center' onClick={()=>onToggle(id)}>
+        <div className='w-full ml-7 max-w-xl flex justify-center bg-white text-black shadow-lg rounded-lg overflow-hidden relative p-4 items-center' onClick={()=>onToggle(id)}>
           <input
             type="checkbox"
             checked={isSelected}
@@ -13,7 +13,7 @@ function AddressCart({ id, state, name, phoneNumber, city, pinCode, district, ad
             <div className='relative w-full mt-3 ml-6'>
               <div className="flex justify-center gap-20 -ml-6">
                 <h2 className="text-xl p-2 font-bold">{name}</h2>
-                <p className="text-xl p-2 font-bold">9639021665</p>
+                <p className="text-xl p-2 font-bold">{phoneNumber}</p>
                 <button className='bg-red-500 py-2 px-4 rounded-lg font-bold hover:bg-red-600 text-sm'
                   onClick={() => onEdit(id)}
                 > Edit</button>

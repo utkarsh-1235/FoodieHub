@@ -5,6 +5,7 @@ import { addAddress } from '../Redux/UserSlice';
 
 function AddressComponent() {
     const [address, setAddress] = useState({
+        phoneNumber: '',
         state: '',
         dist: '',
         city: '',
@@ -13,6 +14,7 @@ function AddressComponent() {
     })
     const userId = useSelector((state)=>state.User.user.user._id);
     console.log(userId)
+    const [showNewAddress, setShowNewAddress] = useState(false);
     const handleInput = (e)=>{
         const {name, value} = e.target;
          setAddress((prev)=>({...prev, [name]:value}))
@@ -29,9 +31,19 @@ function AddressComponent() {
     }
   return (
     <>
-    <div className='p-6 mb-6 bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
+    <div className= 'p-6 mb-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto relative w-9/10'>
+    <h2 className="text-red-500 hover:text-red-600" onClick={()=>setShowNewAddress(!showNewAddress)}>+  Add New Address</h2>
+    {console.log(showNewAddress)}
+    { showNewAddress && (<div>
        <h2 className='text-xl text-center font-semibold'> Address Details </h2>
        <div className='text-center p-4'>
+       <input
+                                            className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                                             type = 'Number'
+                                             name = 'phoneNumber'
+                                             placeholder = 'Enter Phone Number'
+                                             value={address.phoneNumber}
+                                             onChange = {handleInput}/>
        <input
                                             className='w-[80%] text-center ml-4 p-1 mb-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500'
                                              type = 'text'
@@ -74,6 +86,7 @@ function AddressComponent() {
                                            
        <button className='mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition' onClick={SubmitAddress}>Proceed </button>
        </div>
+       </div>)}
     </div>
     </>
   )
