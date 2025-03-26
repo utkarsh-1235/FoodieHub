@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inCreaseQty, decreaseQty, removeItemFromCart } from '../Redux/CartSlice';
 import toast from 'react-hot-toast';
 
-export default function ItemCart({Cart}) {
+export default function ItemCart({Cart, className}) {
     
 
     const dispatch = useDispatch();
@@ -16,12 +16,12 @@ export default function ItemCart({Cart}) {
        console.log(Cart?.dish?.dishId);
 
   return (
-    <div className='shadow-md gap-2 flex rounded-lg p-2 mb-3'>
+    <div className={`shadow-md gap-2 flex rounded-lg p-2 mb-3 ${className}`}>
         {/* <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
         onClick={()=>{dispatch(removeFromCart(Cart));
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/> */}
-        <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500' 
+        <MdDelete className='absolute right-7 hover:cursor-pointer hover:text-red-500'
         onClick={()=>{dispatch(removeItemFromCart({item: {id:Cart._id, userId}}));
             if(Cart.dish?.name) handleRemove(Cart.dish?.name)
         }}/>

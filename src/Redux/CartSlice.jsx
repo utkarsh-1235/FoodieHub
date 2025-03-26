@@ -135,10 +135,9 @@ const cartSlice = createSlice({
                      .addCase(CreateCart.fulfilled,(state, action)=>{
 
                         
-                            state.cart = Array.isArray(action.payload) ? action.payload : [] ;
+                        state.items.push(action.payload);
                             state.loading = false;
                             state.error = null;
-                            
                             
                             localStorage.setItem('cart',JSON.stringify(state.cart));
                             localStorage.setItem('loading',JSON.stringify(state.loading));
@@ -156,8 +155,10 @@ const cartSlice = createSlice({
                         state.error = action.payload;
                      })
                      .addCase(getUserCart.fulfilled, (state, action)=>{
-                        // console.log('cartSLice',action.payload);
+                        console.log('cartSLice',action.payload);
                         state.cart = Array.isArray(action.payload.cartItems) ? action.payload.cartItems : [];
+
+
                         state.loading = false;
                         state.error = null;
                          
@@ -175,7 +176,7 @@ const cartSlice = createSlice({
                         state.error = null;
                      })
                      .addCase(removeItemFromCart.fulfilled,(state,action)=>{
-                        state.cart = action.payload;
+                        state.cart = Array.isArray(action.payload.cartItems) ? action.payload.cartItems : [];
                         state.error = null;
                         state.loading = false;
                         localStorage.setItem('cart',JSON.stringify(state.cart));

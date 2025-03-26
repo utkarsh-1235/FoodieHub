@@ -72,7 +72,7 @@ export default function PaymentForm() {
     
   return (
    <>
-  { isAddress  ? (<div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-3xl mx-auto'>
+  { isAddress  ? (<div className='p-6 text-center bg-white rounded-lg shadow-lg max-w-2xl mx-auto w-full'>
         <h2 className='text-center text-xl font-semibold mb-4'> Select Payment Method</h2> 
         <div className='ml-10'>
         <RadioGroup  value={method} onChange={setMethod}>

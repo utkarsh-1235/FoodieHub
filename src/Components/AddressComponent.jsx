@@ -13,7 +13,7 @@ function AddressComponent() {
         address: ''
     })
     const userId = useSelector((state)=>state.User.user.user._id);
-    console.log(userId)
+    // console.log(userId)
     const [showNewAddress, setShowNewAddress] = useState(false);
     const handleInput = (e)=>{
         const {name, value} = e.target;
