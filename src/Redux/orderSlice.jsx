@@ -3,7 +3,7 @@ import axios from "axios";
 
 const StoreOrders = ()=>{
     try{
-    const orders = localStorage.getItem('orders');
+    const orders = localStorage.getItem('orders') || [];
 
     return Array.isArray(orders) ? JSON.parse(orders) : [];
     }catch(err){
@@ -24,12 +24,17 @@ export const createOrders = createAsyncThunk('add/orders', async(paymentData,{re
 const orderSlice = createSlice({
     name: 'Order',
     initialState: {
-       orders: StoreOrders(),
+       orders: StoreOrders() ,
+       status: 'pending',
        loading: false,
        error: null
     },
     reducers: {
-
+        addOrders: (state,action)=>{
+          console.log(action.payload);
+          state.orders.push(action.payload);
+          localStorage.setItem('orders',JSON.stringify(state.orders));
+        }
     },
     extraReducers: (builder)=>{
        builder
@@ -53,4 +58,5 @@ const orderSlice = createSlice({
     }
 })
 
+export const {addOrders} = orderSlice.actions;
 export default orderSlice.reducer;

@@ -2,6 +2,7 @@ import  { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 // import { StoreAddress } from '../Redux/AddressSlice';
 import { addAddress } from '../Redux/UserSlice';
+import { StoreAddress } from '../Redux/AddressSlice';
 
 function AddressComponent() {
     const [address, setAddress] = useState({
@@ -26,8 +27,8 @@ function AddressComponent() {
             console.error("All fields are required!");
             return;
           }
-          dispatch(addAddress({userId, address}));
-        //  dispatch(StoreAddress(address));
+          // dispatch(addAddress({userId, address}));
+        dispatch(StoreAddress(address));
     }
   return (
     <>

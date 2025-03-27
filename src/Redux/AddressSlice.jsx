@@ -20,7 +20,7 @@ const AddressSlice = createSlice({
             console.log(action.payload);
 
             state.address = action.payload;
-            localStorage.setItems("address",JSON.stringify(state.address));
+            localStorage.setItem("address",JSON.stringify(state.address));
 
         }
     }

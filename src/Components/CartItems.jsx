@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemCart from "./ItemCart";
 import { useEffect, useState } from "react";
 import { getUserCart } from "../Redux/CartSlice";
+import { addOrders } from "../Redux/orderSlice";
 
 function CartItems() {
 
@@ -31,7 +32,7 @@ function CartItems() {
                   }
       
       
-               <button className='mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition'>Proceed </button>
+               <button className='mt-6 w-[40%] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition' onClick={()=>dispatch(addOrders(CartItems))}>Proceed </button>
                </div>}
     </div>
   )
